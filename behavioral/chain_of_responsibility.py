@@ -24,9 +24,9 @@ class ValidationChain(ABC):
     def validate(self, data: Data) -> ValidationResult:
         ...
 
-    def set_next(self, next_action: "ValidationChain") -> Self:
+    def set_next(self, next_action: "ValidationChain") -> "ValidationChain":
         self.next = next_action
-        return self
+        return next_action
 
     def execute(self, data: Data) -> ValidationResult:
         validation_result = self.validate(data)
@@ -64,5 +64,6 @@ class BiggerOrEqualTo20(ValidationChain):
 
 
 if __name__ == "__main__":
-    chain = LessThan100().set_next(NotEqualTo5().set_next((BiggerOrEqualTo20())))
+    chain = LessThan100()
+    chain.set_next(NotEqualTo5()).set_next(BiggerOrEqualTo20())
     print(chain.execute(19))
