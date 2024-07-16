@@ -26,8 +26,7 @@ class CityFactory:
     def get_city(cls, name: str) -> City:
         city = cls._cities.get(name)
         if city is None:
-            city = City(name)
-            cls._cities[name] = city
+            cls._cities[name] = city = City(name)
         return city
 
     def list_cache(self) -> None:
